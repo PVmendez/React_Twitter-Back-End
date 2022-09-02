@@ -1,7 +1,7 @@
-const publicRoutes = require("./publicRoutes");
-const userRoutes = require("./userRoutes");
+const tweetsRouter = require("./tweetsRoutes");
+const usersRoutes = require("./usersRoutes");
 
 module.exports = (app) => {
-	app.use(publicRoutes);
-	app.use(userRoutes);
+  app.use(tweetsRouter);
+  app.use(usersRoutes);
 };

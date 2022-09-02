@@ -1,13 +1,16 @@
 const express = require("express");
-const publicRouter = express.Router();
+const tweetsRouter = express.Router();
+const tweetsController = require("../controllers/tweetsController");
+
+tweetsRouter.get("/tweets", tweetsController.index);
+tweetsRouter.get("/tweets/:id", tweetsController.show);
+
+module.exports = tweetsRouter;
+
 // const checkAuthentication = require("../middlewares/checkAuthentication");
 // const pagesController = require("../controllers/pagesController");
-const tweetsController = require("../controllers/tweetsController");
 // const passport = require("passport");
 
-// publicRouter.get("/", pagesController.prueba);
-publicRouter.get("/tweets", tweetsController.index);
-publicRouter.get("/tweets/:id", tweetsController.show);
 // publicRouter.get("/home", checkAuthentication, pagesController.home);
 
 // publicRouter.get("/login", pagesController.login);
@@ -29,5 +32,3 @@ publicRouter.get("/tweets/:id", tweetsController.show);
 // );
 
 // publicRouter.get("/logout", pagesController.logout);
-
-module.exports = publicRouter;
