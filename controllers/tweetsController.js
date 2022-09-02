@@ -17,21 +17,19 @@ async function show(req, res) {
   res.json(tweet);
 }
 
-// async function store(req, res) {
-//   const tweet = new Tweet({
-//     content: req.body.tweetContent,
-//     date: new Date(),
-//     author: req.user,
-//     likes: [],
-//   });
-
-//   await User.findByIdAndUpdate(req.user._id, {
-//     $push: { tweetList: tweet },
-//   });
-
-//   await tweet.save();
-//   res.redirect("/home");
-// }
+async function store(req, res) {
+  // const tweet = new Tweet({
+  //   content: req.body.tweetContent,
+  //   date: new Date(),
+  //   author: req.user,
+  //   likes: [],
+  // });
+  // await User.findByIdAndUpdate(req.user._id, {
+  //   $push: { tweetList: tweet },
+  // });
+  // await tweet.save();
+  // res.send("Tweet creado");
+}
 
 // async function like(req, res) {
 //   await Tweet.findByIdAndUpdate(req.params.tweetId, {
@@ -55,7 +53,7 @@ async function show(req, res) {
 module.exports = {
   index,
   show,
-  // store,
+  store,
   // like,
   // dislike,
   // destroy,

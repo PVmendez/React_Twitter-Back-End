@@ -10,7 +10,7 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-  const user = await User.findById(req.params.id).populate({
+  const user = await User.findOne({ userName: req.params.userName }).populate({
     path: "tweetList",
   });
 

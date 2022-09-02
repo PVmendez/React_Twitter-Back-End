@@ -5,7 +5,7 @@ const usersController = require("../controllers/usersController");
 // const checkAuthentication = require("../middlewares/checkAuthentication");
 
 usersRouter.get("/users", usersController.index);
-usersRouter.get("/users/:id", usersController.show);
+usersRouter.get("/users/:userName", usersController.show);
 // userRouter.post("/createTweet", tweetController.store);
 // userRouter.get("/tweet/:tweetId/like", tweetController.like);
 // userRouter.get("/tweet/:tweetId/dislike", tweetController.dislike);
