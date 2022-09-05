@@ -2,7 +2,7 @@ const express = require("express");
 const usersRouter = express.Router();
 const usersController = require("../controllers/usersController");
 const passport = require("passport");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 // const tweetController = require("../controllers/tweetsController");
 // const checkAuthentication = require("../middlewares/checkAuthentication");
 const verifyToken = (req, res, next) => {
@@ -24,6 +24,7 @@ const verifyToken = (req, res, next) => {
 
 usersRouter.get("/users", usersController.index);
 usersRouter.get("/users/:userName", verifyToken, usersController.show);
+usersRouter.patch("/users/:userName", usersController.update);
 
 // userRouter.post("/createTweet", tweetController.store);
 // userRouter.get("/tweet/:tweetId/like", tweetController.like);
