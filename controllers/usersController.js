@@ -1,19 +1,11 @@
 const { User } = require("../models");
-const jwt = require("jsonwebtoken")
 // const _ = require("lodash");
 
 async function index(req, res) {
-  const token = req.headers['authorization']
-  jwt.verify(token, 'fraseSecreta', async (err, user) => {
-    if(err) {
-      return res.status(403).json({msg: "No autorizado"})
-    }
     const users = await User.find({}).populate({
       path: "tweetList",
     });
-    res.status(200).json({msg: "Exito"})
     res.json(users);
-  })
 }
 
 async function show(req, res) {

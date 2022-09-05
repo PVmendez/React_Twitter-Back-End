@@ -17,7 +17,7 @@ module.exports = async () => {
       profilePhoto: faker.internet.avatar(),
       coverPhoto: faker.image.abstract(),
       followerList: [],
-      followingList: []
+      followingList: [],
     }));
   }
 

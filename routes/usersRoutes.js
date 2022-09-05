@@ -5,17 +5,25 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken")
 // const tweetController = require("../controllers/tweetsController");
 // const checkAuthentication = require("../middlewares/checkAuthentication");
-
-usersRouter.post( "/login", (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const token = jwt.sign((username, password), 'fraseSecreta');
-    res.status(200).json({token});
-   }
- );
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  console.log(authHeader)
+  console.log("token", token)
+  if(!token) {
+    return res.status(401).send("Token required");
+  }
+  jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
+    if(err) {
+      return res.status(403).send("invalid token");
+    }
+    req.user = user;
+    next();
+  })
+}
 
 usersRouter.get("/users", usersController.index);
-usersRouter.get("/users/:userName", usersController.show);
+usersRouter.get("/users/:userName", verifyToken, usersController.show);
 
 // userRouter.post("/createTweet", tweetController.store);
 // userRouter.get("/tweet/:tweetId/like", tweetController.like);
