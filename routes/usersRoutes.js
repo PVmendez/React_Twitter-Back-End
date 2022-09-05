@@ -1,11 +1,22 @@
 const express = require("express");
 const usersRouter = express.Router();
 const usersController = require("../controllers/usersController");
+const passport = require("passport");
+const jwt = require("jsonwebtoken")
 // const tweetController = require("../controllers/tweetsController");
 // const checkAuthentication = require("../middlewares/checkAuthentication");
 
+usersRouter.post( "/login", (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    const token = jwt.sign((username, password), 'fraseSecreta');
+    res.status(200).json({token});
+   }
+ );
+
 usersRouter.get("/users", usersController.index);
 usersRouter.get("/users/:userName", usersController.show);
+
 // userRouter.post("/createTweet", tweetController.store);
 // userRouter.get("/tweet/:tweetId/like", tweetController.like);
 // userRouter.get("/tweet/:tweetId/dislike", tweetController.dislike);
