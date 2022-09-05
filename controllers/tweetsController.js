@@ -2,9 +2,11 @@ const Tweet = require("../models/Tweet");
 const User = require("../models/User");
 
 async function index(req, res) {
-  const tweets = await Tweet.find({}).populate({
-    path: "author",
-  });
+  const tweets = await Tweet.find({})
+    .populate({
+      path: "author",
+    })
+    .sort([["date", -1]]);
   res.json(tweets);
 }
 
