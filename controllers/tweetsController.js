@@ -1,14 +1,22 @@
 const Tweet = require("../models/Tweet");
 const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 
 async function index(req, res) {
-  const tweets = await Tweet.find({})
-    .populate({
-      path: "author",
-    })
-    .sort([["date", -1]]);
-
   res.json(tweets);
+  const token = req.headers["authorization"];
+  jwt.verify(token, "fraseSecreta", async (err, user) => {
+    if (err) {
+      return res.status(403).json({ msg: "No autorizado" });
+    }
+    const tweets = await Tweet.find({})
+      .populate({
+        path: "author",
+      })
+      .sort([["date", -1]]);
+
+    res.json(tweets);
+  });
 }
 
 async function show(req, res) {

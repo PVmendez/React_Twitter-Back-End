@@ -1,11 +1,17 @@
 const { User } = require("../models");
 
 async function index(req, res) {
-  const users = await User.find({}).populate({
-    path: "tweetList",
+  const token = req.headers["authorization"];
+  jwt.verify(token, "fraseSecreta", async (err, user) => {
+    if (err) {
+      return res.status(403).json({ msg: "No autorizado" });
+    }
+    const users = await User.find({}).populate({
+      path: "tweetList",
+    });
+    res.status(200).json({ msg: "Exito" });
+    res.json(users);
   });
-
-  res.json(users);
 }
 
 async function show(req, res) {

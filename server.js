@@ -1,7 +1,9 @@
 require("dotenv").config();
+
 const express = require("express");
 const routes = require("./routes");
 const cors = require("cors");
+const morgan = require("morgan");
 const passportConfig = require("./passportConfig");
 const dbInitialSetup = require("./dbInitialSetup");
 const APP_PORT = process.env.APP_PORT || 8000;
@@ -10,6 +12,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(morgan('dev'));
 
 passportConfig(app);
 
