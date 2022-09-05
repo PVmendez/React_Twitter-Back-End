@@ -2,9 +2,11 @@ const Tweet = require("../models/Tweet");
 const User = require("../models/User");
 
 async function index(req, res) {
-  const tweets = await Tweet.find({}).populate({
-    path: "author",
-  });
+  const tweets = await Tweet.find({})
+    .populate({
+      path: "author",
+    })
+    .sort([["date", -1]]);
 
   res.json(tweets);
 }
@@ -18,17 +20,20 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-  // const tweet = new Tweet({
-  //   content: req.body.tweetContent,
-  //   date: new Date(),
-  //   author: req.user,
-  //   likes: [],
-  // });
-  // await User.findByIdAndUpdate(req.user._id, {
-  //   $push: { tweetList: tweet },
-  // });
-  // await tweet.save();
-  // res.send("Tweet creado");
+  console.log(req.body);
+  const tweet = new Tweet({
+    content: req.body.content,
+    date: new Date(),
+    author: "631223cb431ae89ba7349c3c",
+    likes: [],
+  });
+
+  await User.findByIdAndUpdate("631223cb431ae89ba7349c3c", {
+    $push: { tweetList: tweet },
+  });
+  await tweet.save();
+
+  res.send("Tweet creado");
 }
 
 // async function like(req, res) {

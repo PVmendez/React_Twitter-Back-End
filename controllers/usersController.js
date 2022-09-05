@@ -1,5 +1,4 @@
 const { User } = require("../models");
-// const _ = require("lodash");
 
 async function index(req, res) {
   const users = await User.find({}).populate({
@@ -12,9 +11,48 @@ async function index(req, res) {
 async function show(req, res) {
   const user = await User.findOne({ userName: req.params.userName }).populate({
     path: "tweetList",
+    populate: {
+      path: "author",
+    },
   });
 
   res.json(user);
+}
+
+async function update(req, res) {
+  const user = await User.findOne({ userName: req.params.userName });
+
+  if (user.followerList.includes("631223cb431ae89ba7349c3c")) {
+    await User.findOneAndUpdate(
+      { userName: user.userName },
+      {
+        $pull: { followerList: "631223cb431ae89ba7349c3c" },
+      }
+    );
+
+    await User.findOneAndUpdate(
+      { _id: "631223cb431ae89ba7349c3c" },
+      {
+        $pull: { followingList: user._id },
+      }
+    );
+  } else {
+    await User.findOneAndUpdate(
+      { userName: user.userName },
+      {
+        $push: { followerList: "631223cb431ae89ba7349c3c" },
+      }
+    );
+
+    await User.findOneAndUpdate(
+      { _id: "631223cb431ae89ba7349c3c" },
+      {
+        $push: { followingList: user },
+      }
+    );
+  }
+
+  res.send("xd");
 }
 
 // // Display the specified resource.
@@ -145,6 +183,7 @@ async function show(req, res) {
 module.exports = {
   show,
   index,
+  update,
   // follow,
   // unfollow,
   // showFollowers,

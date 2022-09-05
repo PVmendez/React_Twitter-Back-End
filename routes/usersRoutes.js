@@ -6,6 +6,8 @@ const usersController = require("../controllers/usersController");
 
 usersRouter.get("/users", usersController.index);
 usersRouter.get("/users/:userName", usersController.show);
+usersRouter.patch("/users/:userName", usersController.update);
+
 // userRouter.post("/createTweet", tweetController.store);
 // userRouter.get("/tweet/:tweetId/like", tweetController.like);
 // userRouter.get("/tweet/:tweetId/dislike", tweetController.dislike);
